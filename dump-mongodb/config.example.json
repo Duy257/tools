@@ -1,0 +1,11 @@
+{
+  "sourceUri": "mongodb+srv://office:YOUR_PASSWORD@chainivodev.rpy80md.mongodb.net/dbA",
+  "destUri": "mongodb+srv://office:YOUR_PASSWORD@chainivodev.rpy80md.mongodb.net/dbB",
+  "options": {
+    "dumpDir": "./.dump_tmp",
+    "drop": false,
+    "gzip": false,
+    "cleanup": true
+  }
+}
+
