@@ -105,8 +105,33 @@ function ensureMongoToolsAvailable() {
   for (const t of tools) {
     const res = spawnSync(t, ["--version"], { stdio: "ignore" });
     if (res.error) {
+      const errorCode = res.error.code;
+      let errorMsg = `Cannot run '${t}'. `;
+      
+      if (errorCode === "ENOENT") {
+        errorMsg += `Command '${t}' not found. `;
+      } else {
+        errorMsg += `Error: ${res.error.message}. `;
+      }
+      
+      errorMsg += `Make sure MongoDB Database Tools are installed and '${t}' is in PATH.`;
+      
+      // Windows-specific help
+      if (process.platform === "win32") {
+        errorMsg += `\n\nOn Windows, you can:\n`;
+        errorMsg += `1. Download MongoDB Database Tools from: https://www.mongodb.com/try/download/database-tools\n`;
+        errorMsg += `2. Extract and add the 'bin' folder to your system PATH\n`;
+        errorMsg += `3. Or use: where ${t}  (to check if it's in PATH)`;
+      } else {
+        errorMsg += `\n\nYou can install MongoDB Database Tools or ensure they are in your PATH.`;
+      }
+      
+      throw new Error(errorMsg);
+    }
+    // Also check exit code in case command exists but fails
+    if (res.status !== 0 && res.status !== null) {
       throw new Error(
-        `Cannot run '${t}'. Make sure MongoDB Database Tools are installed and '${t}' is in PATH.`
+        `'${t}' command failed with exit code ${res.status}. Make sure MongoDB Database Tools are properly installed.`
       );
     }
   }
