@@ -6,4 +6,5 @@ yarn-error.log*
 
 # local config/secrets
 **/config.json
+clones/
 

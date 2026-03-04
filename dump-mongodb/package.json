@@ -6,7 +6,8 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js --config ./config.json"
+    "start": "node index.js --config ./config.json",
+    "clone": "node clone.js --config ./config.json"
   },
   "engines": {
     "node": ">=18.0.0"
